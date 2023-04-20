@@ -1,4 +1,4 @@
-package com.example.drawapp
+package com.example.drawapp.items
 
 import androidx.annotation.DrawableRes
 import com.example.namespace.R

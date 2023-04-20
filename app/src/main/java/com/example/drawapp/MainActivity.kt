@@ -1,15 +1,15 @@
 package com.example.drawapp
 
-import android.graphics.Color
+
+
+
+
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModel
 import com.example.namespace.R
 import org.koin.androidx.viewmodel.ext.android.viewModel
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
     private val toolsLayout: ToolsLayout by lazy { findViewById(R.id.toolLayout) }
     private val sizeLayout: ToolsLayout by lazy { findViewById(R.id.sizeLayout) }
     private val ivTools: ImageView by lazy { findViewById(R.id.ivTools) }
+    private val drawView: DrawView by lazy { findViewById(R.id.viewDraw) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,8 +46,6 @@ class MainActivity : AppCompatActivity() {
         ivTools.setOnClickListener {
             viewModel.processUiEvent(UiEvent.OnToolbarClicked)
         }
-
-        viewModel.processUiEvent(UiEvent.OnToolsClick(TOOLS.NORMAL.ordinal))
     }
 
     private fun render(viewState: ViewState) {
@@ -60,5 +59,7 @@ class MainActivity : AppCompatActivity() {
             render(viewState.toolsList)
             isVisible = viewState.isToolsVisible
         }
+
+        drawView.render(viewState.canvasViewState)
     }
 }

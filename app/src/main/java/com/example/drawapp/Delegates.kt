@@ -1,9 +1,9 @@
 package com.example.drawapp
 
 import android.graphics.PorterDuff
-import android.view.View
 import android.widget.ImageView
 import com.example.drawapp.base.Item
+import com.example.drawapp.items.TOOLS
 import com.example.namespace.R
 import com.hannesdorfmann.adapterdelegates4.AdapterDelegate
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateLayoutContainer

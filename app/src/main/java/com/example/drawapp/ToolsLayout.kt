@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.namespace.R
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 
+
 class ToolsLayout @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,

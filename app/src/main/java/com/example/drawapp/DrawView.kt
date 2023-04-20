@@ -7,6 +7,8 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
 import androidx.core.content.res.ResourcesCompat
+import com.example.drawapp.items.COLOR
+import com.example.drawapp.items.TOOLS
 import kotlin.math.abs
 
 class DrawView @JvmOverloads constructor(
