@@ -15,12 +15,12 @@ class CanvasViewModel : BaseViewModel<ViewState>() {
             sizeList = enumValues<SIZE>().map { ToolItem.SizeModel(it.value) },
             isPaletteVisible = false,
             isBrushSizeChangerVisible = false,
-            canvasViewState = CanvasViewState(color = COLOR.BLACK, size = SIZE.MEDIUM, tools = TOOLS.NORMAL),
+            canvasViewState = CanvasViewState(color = COLOR.BLACK, size = SIZE.SMALL, tools = TOOLS.NORMAL),
             isToolsVisible = false,
         )
 
     init {
-        processDataEvent(DataEvent.OnSetDefaultTools(tool = TOOLS.NORMAL, color = COLOR.BLACK, size = SIZE.MEDIUM))
+        processDataEvent(DataEvent.OnSetDefaultTools(tool = TOOLS.NORMAL, color = COLOR.BLACK, size = SIZE.SMALL))
     }
 
     override fun reduce(event: Event, previousState: ViewState): ViewState? {
@@ -36,8 +36,11 @@ class CanvasViewModel : BaseViewModel<ViewState>() {
 
             is UiEvent.OnToolsClick -> {
                 when (event.index) {
+                    TOOLS.SIZE.ordinal -> {
+                        return previousState.copy(isBrushSizeChangerVisible = !previousState.isBrushSizeChangerVisible)
+                    }
                     TOOLS.PALETTE.ordinal -> {
-                        return previousState.copy(isPaletteVisible = !previousState.isPaletteVisible, isBrushSizeChangerVisible = !previousState.isBrushSizeChangerVisible)
+                        return previousState.copy(isPaletteVisible = !previousState.isPaletteVisible)
                     }
                     else -> {
 
@@ -60,6 +63,7 @@ class CanvasViewModel : BaseViewModel<ViewState>() {
                             isBrushSizeChangerVisible = previousState.isBrushSizeChangerVisible
                         )
                     }
+
                 }
             }
 

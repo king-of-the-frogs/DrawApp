@@ -3,6 +3,7 @@ package com.example.drawapp.items
 import androidx.annotation.Size
 
 enum class SIZE(
+    @Size
     val value: Int
 ) {
     SMALL(4),

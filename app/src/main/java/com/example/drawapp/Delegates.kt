@@ -1,6 +1,9 @@
 package com.example.drawapp
 
+import android.annotation.SuppressLint
+import android.graphics.Color.BLACK
 import android.graphics.PorterDuff
+import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.widget.ImageView
@@ -33,7 +36,7 @@ fun colorAdapterDelegate(
     }
 
 fun sizeAdapterDelegate(
-    onSizeClick: (Int) -> Unit
+    onClick: (Int) -> Unit
 ): AdapterDelegate<List<Item>> =
     adapterDelegateLayoutContainer<ToolItem.SizeModel, Item>(
         R.layout.item_size
@@ -42,10 +45,11 @@ fun sizeAdapterDelegate(
         bind { list ->
             tvToolsText.text = item.size.toString()
             itemView.setOnClickListener {
-                onSizeClick(adapterPosition)
+                onClick(adapterPosition)
             }
         }
     }
+
 
 fun toolsAdapterDelegate(
     onToolsClick: (Int) -> Unit
@@ -73,9 +77,9 @@ fun toolsAdapterDelegate(
 
             TOOLS.DASH -> {
                 if (item.selectedTool == TOOLS.DASH) {
-                    tvToolsText.setBackgroundResource(R.drawable.bg_selected)
+                    ivTools.setBackgroundResource(R.drawable.bg_selected)
                 } else {
-                    tvToolsText.setBackgroundResource(android.R.color.transparent)
+                    ivTools.setBackgroundResource(android.R.color.transparent)
                 }
             }
 

@@ -11,7 +11,8 @@ enum class COLOR(
     BLACK(R.color.dark_900),
     RED(R.color.red_900),
     BLUE(R.color.blue_900),
-    GREEN(R.color.green_500);
+    GREEN(R.color.green_500),
+    YELLOW(R.color.yellow_900);
 
     companion object {
         private val map = values().associateBy (COLOR::value)

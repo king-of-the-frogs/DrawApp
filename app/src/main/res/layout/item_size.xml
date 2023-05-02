@@ -1,9 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/tvToolsText"
-    android:layout_width="24dp"
-    android:layout_height="24dp"
-    android:text=""
-    android:background="@drawable/ic_baseline_close_fullscreen_24">
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
-</TextView>
+    <ImageView
+        android:id="@+id/ivTools"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_baseline_close_fullscreen_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvToolsText"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        app:layout_constraintStart_toStartOf="@+id/ivTools"
+        app:layout_constraintTop_toBottomOf="@+id/ivTools" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
