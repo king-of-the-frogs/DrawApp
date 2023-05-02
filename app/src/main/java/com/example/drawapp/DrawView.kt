@@ -92,7 +92,7 @@ class DrawView @JvmOverloads constructor(
         currentY = motionTouchEventY
     }
 
-    private fun  touchStart() {
+    private fun touchStart() {
         onClick()
         path.reset()
         path.moveTo(motionTouchEventX, motionTouchEventY)
@@ -131,9 +131,10 @@ class DrawView @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        canvas.drawBitmap(extraBitmap, 0f, 0f, null)
-        canvas.drawPath(drawing, paint)
-        canvas.drawPath(curPath, paint)
+        if (::extraBitmap.isInitialized) {
+            canvas.drawBitmap(extraBitmap, 0f, 0f, null)
+            canvas.drawPath(drawing, paint)
+            canvas.drawPath(curPath, paint)
+        }
     }
-
 }

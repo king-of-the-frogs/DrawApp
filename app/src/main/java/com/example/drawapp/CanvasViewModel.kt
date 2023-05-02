@@ -6,18 +6,21 @@ import com.example.drawapp.items.COLOR
 import com.example.drawapp.items.SIZE
 import com.example.drawapp.items.TOOLS
 
+
 class CanvasViewModel : BaseViewModel<ViewState>() {
     override fun initialViewState(): ViewState =
         ViewState(
             colorList = enumValues<COLOR>().map { ToolItem.ColorModel(it.value) },
             toolsList = enumValues<TOOLS>().map { ToolItem.ToolModel(it) },
+            sizeList = enumValues<SIZE>().map { ToolItem.SizeModel(it.value) },
             isPaletteVisible = false,
+            isBrushSizeChangerVisible = false,
             canvasViewState = CanvasViewState(color = COLOR.BLACK, size = SIZE.MEDIUM, tools = TOOLS.NORMAL),
             isToolsVisible = false,
         )
 
     init {
-        processDataEvent(DataEvent.OnSetDefaultTools(tool = TOOLS.NORMAL, color = COLOR.BLACK))
+        processDataEvent(DataEvent.OnSetDefaultTools(tool = TOOLS.NORMAL, color = COLOR.BLACK, size = SIZE.MEDIUM))
     }
 
     override fun reduce(event: Event, previousState: ViewState): ViewState? {
@@ -26,14 +29,15 @@ class CanvasViewModel : BaseViewModel<ViewState>() {
             is UiEvent.OnToolbarClicked -> {
                 return previousState.copy(
                     isToolsVisible = !previousState.isToolsVisible,
-                    isPaletteVisible = false
+                    isPaletteVisible = false,
+                    isBrushSizeChangerVisible = false
                 )
             }
 
             is UiEvent.OnToolsClick -> {
                 when (event.index) {
                     TOOLS.PALETTE.ordinal -> {
-                        return previousState.copy(isPaletteVisible = !previousState.isPaletteVisible)
+                        return previousState.copy(isPaletteVisible = !previousState.isPaletteVisible, isBrushSizeChangerVisible = !previousState.isBrushSizeChangerVisible)
                     }
                     else -> {
 
@@ -48,10 +52,12 @@ class CanvasViewModel : BaseViewModel<ViewState>() {
 
                         return ViewState(
                             colorList = previousState.colorList,
+                            sizeList = previousState.sizeList,
                             toolsList = toolsList,
                             isPaletteVisible = previousState.isPaletteVisible,
                             canvasViewState = CanvasViewState(color = previousState.canvasViewState.color, size = previousState.canvasViewState.size, tools = TOOLS.values()[event.index]),
                             isToolsVisible = previousState.isToolsVisible,
+                            isBrushSizeChangerVisible = previousState.isBrushSizeChangerVisible
                         )
                     }
                 }
@@ -70,17 +76,41 @@ class CanvasViewModel : BaseViewModel<ViewState>() {
 
                 return ViewState(
                     colorList = previousState.colorList,
+                    sizeList = previousState.sizeList,
                     toolsList = toolsList,
                     isPaletteVisible = previousState.isPaletteVisible,
                     canvasViewState = CanvasViewState(color = selectedColor, size = previousState.canvasViewState.size, tools = previousState.canvasViewState.tools),
                     isToolsVisible = previousState.isToolsVisible,
+                    isBrushSizeChangerVisible = previousState.isBrushSizeChangerVisible
+                )
+            }
+
+            is UiEvent.OnSizeClick -> {
+                val selectedSize = SIZE.values()[event.index]
+
+                val toolsList = previousState.toolsList.map {
+                    if (it.type == TOOLS.SIZE) {
+                        it.copy(selectedSize = selectedSize)
+                    } else {
+                        it
+                    }
+                }
+
+                return ViewState(
+                    colorList = previousState.colorList,
+                    sizeList = previousState.sizeList,
+                    toolsList = toolsList,
+                    isPaletteVisible = previousState.isPaletteVisible,
+                    canvasViewState = CanvasViewState(color = previousState.canvasViewState.color, size = selectedSize, tools = previousState.canvasViewState.tools),
+                    isToolsVisible = previousState.isToolsVisible,
+                    isBrushSizeChangerVisible = previousState.isBrushSizeChangerVisible
                 )
             }
 
             is DataEvent.OnSetDefaultTools -> {
                 val toolsList = previousState.toolsList.map { model ->
                     if (model.type == event.tool) {
-                        model.copy(isSelected = true, selectedColor = event.color)
+                        model.copy(isSelected = true, selectedColor = event.color, selectedSize = event.size)
                     } else {
                         model.copy(isSelected = false)
                     }

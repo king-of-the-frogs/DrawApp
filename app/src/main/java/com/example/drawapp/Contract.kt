@@ -2,16 +2,17 @@ package com.example.drawapp
 
 import com.example.drawapp.base.Event
 import com.example.drawapp.items.COLOR
+import com.example.drawapp.items.SIZE
 import com.example.drawapp.items.TOOLS
 
 
 data class ViewState(
     val toolsList: List<ToolItem.ToolModel>,
     val colorList: List<ToolItem.ColorModel>,
- //   val sizeList: List<ToolItem.SizeModel>,
+    val sizeList: List<ToolItem.SizeModel>,
     val canvasViewState: CanvasViewState,
     val isPaletteVisible: Boolean,
-//    val isBrushSizeChangerVisible: Boolean,
+    val isBrushSizeChangerVisible: Boolean,
     val isToolsVisible: Boolean
 )
 
@@ -25,5 +26,5 @@ sealed class UiEvent() : Event {
 }
 
 sealed class DataEvent : Event {
-    data class OnSetDefaultTools(val tool: TOOLS, val color: COLOR) : DataEvent()
+    data class OnSetDefaultTools(val tool: TOOLS, val color: COLOR, val size: SIZE) : DataEvent()
 }

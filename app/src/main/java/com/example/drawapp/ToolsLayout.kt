@@ -19,26 +19,28 @@ class ToolsLayout @JvmOverloads constructor(
 
     private var onClick: (Int) -> Unit = {}
 
-
-    private val toolsList: RecyclerView = findViewById(R.id.rvTools)
-
     private val adapterDelegate = ListDelegationAdapter(
         colorAdapterDelegate {
             onClick(it)
         },
-//        sizeChangedAdapterDelegate {
-//            onClick(it)
-//        },
+
+        sizeAdapterDelegate {
+            onClick(it)
+        },
+
         toolsAdapterDelegate {
             onClick(it)
         }
     )
 
+    private val toolsList: RecyclerView = RecyclerView(context).apply {
+        layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+        setAdapterAndCleanupOnDetachFromWindow(adapterDelegate)
+    }
+
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-
-        toolsList.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-        toolsList.setAdapterAndCleanupOnDetachFromWindow(adapterDelegate)
+        addView(toolsList)
     }
 
     fun render(list: List<ToolItem>) {

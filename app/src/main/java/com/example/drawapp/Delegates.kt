@@ -1,7 +1,11 @@
 package com.example.drawapp
 
 import android.graphics.PorterDuff
+import android.util.TypedValue
+import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.example.drawapp.base.Item
 import com.example.drawapp.items.TOOLS
 import com.example.namespace.R
@@ -16,7 +20,9 @@ fun colorAdapterDelegate(
         R.layout.item_palette
     ) {
         val color: ImageView = findViewById(R.id.ivColor)
-        itemView.setOnClickListener { onClick(adapterPosition) }
+        itemView.setOnClickListener {
+            onClick(adapterPosition)
+        }
 
         bind { list ->
             color.setColorFilter(
@@ -26,44 +32,70 @@ fun colorAdapterDelegate(
         }
     }
 
-fun toolsAdapterDelegate(
-    onToolsClick: (Int) -> Unit
+fun sizeAdapterDelegate(
+    onSizeClick: (Int) -> Unit
 ): AdapterDelegate<List<Item>> =
-    adapterDelegateLayoutContainer<ToolItem.ToolModel, Item>(
-        R.layout.item_tools
+    adapterDelegateLayoutContainer<ToolItem.SizeModel, Item>(
+        R.layout.item_size
     ) {
-        val ivTool: ImageView = findViewById(R.id.ivTools)
+        val tvToolsText: TextView = findViewById(R.id.tvToolsText)
         bind { list ->
-            ivTool.setImageResource(item.type.value)
-
-  //          if (tvToolsText.visibility == View.VISIBLE) {
- //               tvToolsText.visibility = View.GONE
-  //          }
-
-            when (item.type) {
-
-                TOOLS.PALETTE -> {
-                    ivTool.setColorFilter(
-                        context.resources.getColor(item.selectedColor.value, null),
-                        PorterDuff.Mode.SRC_IN
-                    )
-                }
-
-//                TOOLS.SIZE -> {
- //                   tvToolsText.visibility = View.VISIBLE
- //                   tvToolsText.text = item.selectedSize.value.toString()
-  //              }
-                else -> {
-                    if (item.isSelected) {
-                        ivTool.setBackgroundResource(R.drawable.bg_selected)
-                    } else {
-                        ivTool.setBackgroundResource(android.R.color.transparent)
-                    }
-                }
+            tvToolsText.text = item.size.toString()
+            itemView.setOnClickListener {
+                onSizeClick(adapterPosition)
             }
         }
+    }
+
+fun toolsAdapterDelegate(
+    onToolsClick: (Int) -> Unit
+): AdapterDelegate<List<Item>> = adapterDelegateLayoutContainer<ToolItem.ToolModel, Item>(
+    R.layout.item_tools
+) {
+    val ivTools = findViewById<ImageView>(R.id.ivTools)
+    val tvToolsText = findViewById<TextView>(R.id.tvToolsText)
+
+    bind { list ->
+        ivTools.setImageResource(item.type.value)
+
+        if (tvToolsText.visibility == View.VISIBLE) {
+            tvToolsText.visibility = View.GONE
+        }
+
+        when (item.type) {
+            TOOLS.NORMAL -> {
+                if (item.selectedTool == TOOLS.NORMAL) {
+                    ivTools.setBackgroundResource(R.drawable.bg_selected)
+                } else {
+                    ivTools.setBackgroundResource(android.R.color.transparent)
+                }
+            }
+
+            TOOLS.DASH -> {
+                if (item.selectedTool == TOOLS.DASH) {
+                    tvToolsText.setBackgroundResource(R.drawable.bg_selected)
+                } else {
+                    tvToolsText.setBackgroundResource(android.R.color.transparent)
+                }
+            }
+
+            TOOLS.SIZE -> {
+                tvToolsText.visibility = View.VISIBLE
+                tvToolsText.text = item.selectedSize.value.toString()
+            }
+
+            TOOLS.PALETTE -> {
+                ivTools.setColorFilter(
+                    context.resources.getColor(item.selectedColor.value, null),
+                    PorterDuff.Mode.SRC_IN
+                )
+            }
+
+        }
+
 
         itemView.setOnClickListener {
             onToolsClick(adapterPosition)
         }
     }
+}

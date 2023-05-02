@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
+
 abstract class BaseViewModel<VIEW_STATE> : ViewModel() {
 
     val viewState: MutableLiveData<VIEW_STATE> by lazy { MutableLiveData(initialViewState()) }

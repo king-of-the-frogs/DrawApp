@@ -67,7 +67,7 @@
     </style>
 
     <style name="Subtitle1" parent="CondensedBase">
-        <item name="android:textColor">?attr/colorAccented</item>
+        <item name="android:textColor">@color/white_100</item>
         <item name="android:textSize">16sp</item>
         <item name="android:letterSpacing">0.035625</item>
     </style>
@@ -80,7 +80,7 @@
 
 
     <style name="Subtitle2" parent="CondensedBase">
-        <item name="android:textColor">?attr/colorAccented</item>
+        <item name="android:textColor">@color/black_100</item>
         <item name="android:textSize">14sp</item>
         <item name="android:letterSpacing">0.035</item>
         <item name="android:lineSpacingExtra">4dp</item>

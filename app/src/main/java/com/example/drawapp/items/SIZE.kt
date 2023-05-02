@@ -1,5 +1,7 @@
 package com.example.drawapp.items
 
+import androidx.annotation.Size
+
 enum class SIZE(
     val value: Int
 ) {
