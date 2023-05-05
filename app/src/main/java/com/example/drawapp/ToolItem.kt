@@ -8,11 +8,11 @@ import com.example.drawapp.items.TOOLS
 
 sealed class ToolItem : Item {
     data class ColorModel(@ColorRes val color: Int) : ToolItem()
-    data class SizeModel(val size: Int) : ToolItem()
+    data class SizeModel(var size: Int) : ToolItem()
     data class ToolModel(
         val type: TOOLS,
         val selectedTool: TOOLS = TOOLS.NORMAL,
-        val selectedSize: SIZE = SIZE.SMALL,
+        var selectedSize: SIZE = SIZE.SMALL,
         val selectedColor: COLOR = COLOR.BLACK,
         val isSelected: Boolean = false
     ): ToolItem()

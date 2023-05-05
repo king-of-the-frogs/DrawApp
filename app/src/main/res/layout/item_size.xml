@@ -7,7 +7,7 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/ivTools"
+        android:id="@+id/ivSize"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:src="@drawable/ic_baseline_close_fullscreen_24"
@@ -15,10 +15,10 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvToolsText"
+        android:id="@+id/tvSizeText"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        app:layout_constraintStart_toStartOf="@+id/ivTools"
-        app:layout_constraintTop_toBottomOf="@+id/ivTools" />
+        app:layout_constraintStart_toStartOf="@+id/ivSize"
+        app:layout_constraintTop_toBottomOf="@+id/ivSize" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

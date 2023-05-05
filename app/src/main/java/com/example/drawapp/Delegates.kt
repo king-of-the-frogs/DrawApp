@@ -1,15 +1,14 @@
 package com.example.drawapp
 
-import android.annotation.SuppressLint
-import android.graphics.Color.BLACK
+
+import android.graphics.Paint
 import android.graphics.PorterDuff
-import android.util.Log
-import android.util.TypedValue
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import com.example.drawapp.base.Item
+
+import com.example.drawapp.items.SIZE
 import com.example.drawapp.items.TOOLS
 import com.example.namespace.R
 import com.hannesdorfmann.adapterdelegates4.AdapterDelegate
@@ -41,12 +40,23 @@ fun sizeAdapterDelegate(
     adapterDelegateLayoutContainer<ToolItem.SizeModel, Item>(
         R.layout.item_size
     ) {
-        val tvToolsText: TextView = findViewById(R.id.tvToolsText)
-        bind { list ->
-            tvToolsText.text = item.size.toString()
-            itemView.setOnClickListener {
-                onClick(adapterPosition)
+        val size: ImageView = findViewById(R.id.ivSize)
+        val sizeText: TextView = findViewById(R.id.tvSizeText)
+        itemView.setOnClickListener {
+            onClick(adapterPosition)
+        }
+        bind {  list ->
+            size.setOnClickListener {
+                // Получаем текущий размер кисти из модели данных
+                val currentSize = item.size
+                // Получаем следующий размер кисти из перечисления
+                val nextSize = SIZE.values().find { it.value > currentSize }?.value ?: SIZE.SMALL.value
+                // Устанавливаем следующий размер кисти в модели данных
+                item.size = nextSize
+                // Обновляем текст на элементе списка с размером кисти
+                sizeText.text = item.size.toString()
             }
+            sizeText.text = item.size.toString()
         }
     }
 
@@ -84,6 +94,17 @@ fun toolsAdapterDelegate(
             }
 
             TOOLS.SIZE -> {
+                ivTools.setOnClickListener {
+                    // Получаем текущий размер кисти из модели данных
+                    val currentSize = item.selectedSize.value
+                    // Получаем следующий размер кисти из перечисления
+                    val nextSize = SIZE.values().find { it.value > currentSize } ?: SIZE.SMALL
+                    // Устанавливаем следующий размер кисти в модели данных
+                    item.selectedSize = nextSize
+                    // Обновляем текст на элементе списка инструментов с размером кисти
+                    tvToolsText.text = item.selectedSize.value.toString()
+
+                }
                 tvToolsText.visibility = View.VISIBLE
                 tvToolsText.text = item.selectedSize.value.toString()
             }
@@ -103,3 +124,4 @@ fun toolsAdapterDelegate(
         }
     }
 }
+
