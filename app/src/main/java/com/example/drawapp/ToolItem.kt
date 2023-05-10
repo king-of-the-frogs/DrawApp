@@ -11,7 +11,7 @@ sealed class ToolItem : Item {
     data class SizeModel(var size: Int) : ToolItem()
     data class ToolModel(
         val type: TOOLS,
-        val selectedTool: TOOLS = TOOLS.NORMAL,
+        var selectedTool: TOOLS = TOOLS.NORMAL,
         var selectedSize: SIZE = SIZE.SMALL,
         val selectedColor: COLOR = COLOR.BLACK,
         val isSelected: Boolean = false

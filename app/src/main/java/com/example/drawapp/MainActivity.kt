@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
     companion object {
         private const val PALETTE_VIEW = 0
         private const val SIZE_VIEW = 1
-        private const val TOOLS_VIEW = 1
+        private const val TOOLS_VIEW = 2
     }
 
     private val viewModel: CanvasViewModel by viewModel()
@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        toolsList = listOf(paletteLayout,toolsLayout,sizeLayout)
+        toolsList = listOf(paletteLayout, sizeLayout, toolsLayout)
         viewModel.viewState.observe(this, ::render)
 
         paletteLayout.setOnClickListener {

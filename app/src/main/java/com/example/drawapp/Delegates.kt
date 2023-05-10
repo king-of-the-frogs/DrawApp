@@ -3,6 +3,7 @@ package com.example.drawapp
 
 import android.graphics.Paint
 import android.graphics.PorterDuff
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -25,7 +26,6 @@ fun colorAdapterDelegate(
         itemView.setOnClickListener {
             onClick(adapterPosition)
         }
-
         bind { list ->
             color.setColorFilter(
                 context.resources.getColor(item.color, null),
@@ -40,21 +40,25 @@ fun sizeAdapterDelegate(
     adapterDelegateLayoutContainer<ToolItem.SizeModel, Item>(
         R.layout.item_size
     ) {
-        val size: ImageView = findViewById(R.id.ivSize)
+        val size: TextView = findViewById(R.id.ivSize)
         val sizeText: TextView = findViewById(R.id.tvSizeText)
         itemView.setOnClickListener {
             onClick(adapterPosition)
         }
         bind {  list ->
-            size.setOnClickListener {
-                // Получаем текущий размер кисти из модели данных
-                val currentSize = item.size
-                // Получаем следующий размер кисти из перечисления
-                val nextSize = SIZE.values().find { it.value > currentSize }?.value ?: SIZE.SMALL.value
-                // Устанавливаем следующий размер кисти в модели данных
-                item.size = nextSize
-                // Обновляем текст на элементе списка с размером кисти
-                sizeText.text = item.size.toString()
+            when (item.size) {
+                4 -> {
+                    sizeText.text = 4.toString()
+                    size.text = "4"
+                }
+                16 -> {
+                    sizeText.text = 16.toString()
+                    size.text = "16"
+                }
+                32 -> {
+                    sizeText.text = 32.toString()
+                    size.text = "32"
+                }
             }
             sizeText.text = item.size.toString()
         }
@@ -76,37 +80,14 @@ fun toolsAdapterDelegate(
             tvToolsText.visibility = View.GONE
         }
 
-        when (item.type) {
+        when (item.selectedTool) {
             TOOLS.NORMAL -> {
-                if (item.selectedTool == TOOLS.NORMAL) {
-                    ivTools.setBackgroundResource(R.drawable.bg_selected)
-                } else {
-                    ivTools.setBackgroundResource(android.R.color.transparent)
-                }
             }
 
             TOOLS.DASH -> {
-                if (item.selectedTool == TOOLS.DASH) {
-                    ivTools.setBackgroundResource(R.drawable.bg_selected)
-                } else {
-                    ivTools.setBackgroundResource(android.R.color.transparent)
-                }
             }
 
             TOOLS.SIZE -> {
-                ivTools.setOnClickListener {
-                    // Получаем текущий размер кисти из модели данных
-                    val currentSize = item.selectedSize.value
-                    // Получаем следующий размер кисти из перечисления
-                    val nextSize = SIZE.values().find { it.value > currentSize } ?: SIZE.SMALL
-                    // Устанавливаем следующий размер кисти в модели данных
-                    item.selectedSize = nextSize
-                    // Обновляем текст на элементе списка инструментов с размером кисти
-                    tvToolsText.text = item.selectedSize.value.toString()
-
-                }
-                tvToolsText.visibility = View.VISIBLE
-                tvToolsText.text = item.selectedSize.value.toString()
             }
 
             TOOLS.PALETTE -> {
@@ -115,13 +96,16 @@ fun toolsAdapterDelegate(
                     PorterDuff.Mode.SRC_IN
                 )
             }
-
         }
-
 
         itemView.setOnClickListener {
             onToolsClick(adapterPosition)
         }
     }
 }
+
+
+
+
+
 
